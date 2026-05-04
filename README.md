@@ -40,9 +40,9 @@ El proyecto está organizado de la siguiente manera:
 
 El sistema utiliza archivos .txt para almacenar información:
 
-usuarios.txt → Datos de usuarios
-vehiculos.txt → Información de vehículos
-comprobantes.txt → Registros de matrícula
+* usuarios.txt → Datos de usuarios
+* vehiculos.txt → Información de vehículos
+* comprobantes.txt → Registros de matrícula
 
 ## Ejemplo de uso
 
