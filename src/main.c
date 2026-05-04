@@ -110,10 +110,10 @@ int main() {
                     listarVehiculosMatriculadosArchivo();
                     break;
                 case 3:
-                    printf("Cerrando sesión.........\nVuelva Pronto!\n");
+                    printf("Cerrando sesion.........\nVuelva Pronto!\n");
                     break;
                 default:
-                    printf("Opción no válida, por favor intente de nuevo.\n");
+                    printf("Opción no valida, por favor intente de nuevo.\n");
                     mensajeSalida();
             }
         } else { 
