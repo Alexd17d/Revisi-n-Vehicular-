@@ -11,6 +11,7 @@
 int loginMenu(){
 	int opcionLogin;
     int accesoPermitido = 0;
+    int tipoUsuario = 0; // 0 = no definido, 1 = usuario normal, 2 = administrador
 
     // Menú de autenticación
     do {
@@ -32,7 +33,8 @@ int loginMenu(){
 		limpiarPantalla();
 	 	int intentos=0;
 		  while (intentos < 3 && !accesoPermitido) {
-	        accesoPermitido = LogUser();
+	        tipoUsuario = LogUser();
+            accesoPermitido = (tipoUsuario >0); // Acceso permitido si es usuario normal o administrador
             limpiarPantalla();
 	        if (!accesoPermitido) {
 	            intentos++;
@@ -55,38 +57,67 @@ int loginMenu(){
         }
     } while (!accesoPermitido);
 
-    return 1; // Acceso exitoso
+    return tipoUsuario; // Acceso exitoso
 }
 
-
-// Se muestra al usuario el men
-void mostrarMenu() {
-	printf("\n\t-- MENU DE MATRICULACION VEHICULAR --\n");
-	printf("1. Registrar nuevo vehiculo\n");
-	printf("2. Buscar vehiculo por placa\n");
-	printf("3. Listar todos los vehiculos\n");
-	printf("4. Empezar proceso de matriculacion\n");
-	printf("5. Listar los vehiculos matriculados\n");
-	printf("6. Generar comprobante\n");
-	printf("7. Salir\n");
+// menu usuario
+void mostrarMenuUsuario() {
+    printf("\n\t-- MENU DE MATRICULACION VEHICULAR --\n");
+    printf("1. Registrar nuevo vehiculo\n");
+    printf("2. Buscar vehiculo por placa\n");
+    printf("3. Empezar proceso de matriculacion\n");
+    printf("4. Generar comprobante\n");
+    printf("5. Salir\n");
+    printf("Seleccione una opcion: ");
+}
+// Se muestra al usuario el menu
+void mostrarMenuAdministrador() {
+	printf("\n\t-- MENU DE ADMINISTRADOR --\n");
+	printf("1. Listar todos los vehiculos\n");
+	printf("2. Listar los vehiculos matriculados\n");
+	printf("3. Salir\n");
 	printf("Seleccione una opcion: ");
 }
 
 //Función principal
 int main() {
     int opcion;
-
-    if (!loginMenu()) {
+    int tipoUsuario = loginMenu();
+    if (tipoUsuario == 0) {
 	printf("Finalizando el programa...\n");
     return 0; // Finaliza si el usuario selecciona "Salir" o falla 3 intentos
     }
 
     do {
         limpiarPantalla();
-        mostrarMenu();
+        if (tipoUsuario == 2) {
+            mostrarMenuAdministrador();
+        } else {
+            mostrarMenuUsuario();
+        }
+        printf("Seleccione una opcion: ");
         scanf("%d", &opcion);
-        while (getchar() != '\n');
-
+        while (getchar() != '\n'); // Limpiar el buffer de entrada
+        // Administrador
+        if (tipoUsuario == 2) {
+            switch (opcion) {
+                case 1:
+                    limpiarPantalla();
+                    listarVehiculosArchivo();
+                    break;
+                case 2:
+                    limpiarPantalla();
+                    listarVehiculosMatriculadosArchivo();
+                    break;
+                case 3:
+                    printf("Cerrando sesión.........\nVuelva Pronto!\n");
+                    break;
+                default:
+                    printf("Opción no válida, por favor intente de nuevo.\n");
+                    mensajeSalida();
+            }
+        } else { 
+            // Usuario normal
         switch (opcion) {
             case 1:
                 limpiarPantalla();
@@ -98,29 +129,22 @@ int main() {
                 break;
             case 3:
                 limpiarPantalla();
-                listarVehiculosArchivo();
+                procesoMatriculacionArchivo();
                 break;
             case 4:
                 limpiarPantalla();
-                procesoMatriculacionArchivo();
-                break;
-            case 5:
-                limpiarPantalla();
-                listarVehiculosMatriculadosArchivo();
-                break;
-            case 6:
-                limpiarPantalla();
                 generarComprobanteArchivo();
                 break;
-            case 7:
+            case 5:
                 printf("Cerrando sesión.........\nVuelva Pronto!\n");
                 break;
             default:
                 printf("Opción no válida, por favor intente de nuevo.\n");
                 mensajeSalida();
         }
+        }
 
-    } while (opcion != 7);
+    } while ((tipoUsuario == 2 && opcion != 3) || (tipoUsuario == 1 && opcion != 5));
 
     return 0;
 }

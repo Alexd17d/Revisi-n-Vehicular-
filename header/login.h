@@ -5,6 +5,6 @@
 #define MAX_CONTRASENIA 50
 
 void SignUser();   // Registro
-int LogUser();     // Login, retorna 1 si accede, 0 si falla
+int LogUser();     // 0 = falla, 1 = Usuario normal, 2 = administrador
 
 #endif

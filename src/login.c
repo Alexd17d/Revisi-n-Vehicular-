@@ -119,6 +119,10 @@ int LogUser() {
     if (encontrado) {
         printf("Inicio de sesion exitoso. Bienvenido, %s.\n", usuario);
         mensajeSalida();
+        // Dectectar Administrador
+        if (strcmp(usuario, "admin") == 0 && strcmp(contrasenia, "1234") == 0) {
+            return 2; // Retorna 2 para el administrador
+        }
         return 1;
     } else {
         printf("Usuario o contrasenia incorrectos.\n");
