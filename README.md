@@ -46,10 +46,10 @@ El sistema utiliza archivos .txt para almacenar información:
 
 ## Ejemplo de uso
 
-Registrar un usuario
-Iniciar sesión
-Registrar un vehículo
-Consultar datos guardados
+* Registrar un usuario
+* Iniciar sesión
+* Registrar un vehículo
+* Consultar datos guardados
 
 ## Ejecución del Programa
 
