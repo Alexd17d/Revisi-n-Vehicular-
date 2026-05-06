@@ -3,6 +3,7 @@
 #include <string.h>
 #include "utilidades.h"
 #include "login.h"
+#include <ctype.h>
 
 #define ARCHIVO_USUARIOS "D:/Proyecto/matriculacion_vehicular-main/data/usuarios.txt"  // Ruta del archivo donde se almacenan los usuarios
 #define MAX_LINEA 256
@@ -47,6 +48,20 @@ void SignUser() {
     fgets(usuario, MAX_USUARIO, stdin);
     usuario[strcspn(usuario, "\n")] = '\0';  // Elimina el salto de línea
 
+    // Validacion de usuario existente
+    if(strlen(usuario) == 0) {
+        printf("El nombre de usuario no puede estar vacio. Intente nuevamente.\n");
+        mensajeSalida();
+        return;
+    }
+    for (int i = 0; usuario[i] != '\0'; i++) {
+        if (!isalpha(usuario[i])) {
+            printf("El nombre de usuario solo puede contener letras y guiones bajos. Intente nuevamente.\n");
+            mensajeSalida();
+            return;
+        }
+    }
+
     if (usuarioExiste(usuario)) {
         printf("El nombre de usuario ya está registrado. Intente con otro.\n");
         mensajeSalida();
@@ -56,6 +71,14 @@ void SignUser() {
     printf("Ingrese una contrasenia: ");
     fgets(contrasenia, MAX_CONTRASENIA, stdin);
     contrasenia[strcspn(contrasenia, "\n")] = '\0';
+
+    // Validacion de contraseña
+
+    if (strlen(contrasenia) < 4) {
+        printf("La contrasenia debe tener al menos 4 caracteres. Intente nuevamente.\n");
+        mensajeSalida();
+        return;
+    }
 
     FILE *file = fopen(ARCHIVO_USUARIOS, "a");
     if (file == NULL) {

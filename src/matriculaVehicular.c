@@ -44,7 +44,7 @@ void mostrarDatosVehiculo(const Vehiculo* v) {
         return;
     }
 
-    printf("\n========== DATOS DEL VEHÍCULO ==========\n");
+    printf("\n========== DATOS DEL VEHICULO ==========\n");
     printf("Cedula del propietario : %s\n", v->cedula);
     printf("Placa del vehiculo     : %s\n", v->placa);
     printf("Tipo de vehiculo       : %s\n", v->tipo);
@@ -142,11 +142,11 @@ void generarComprobanteArchivo() {
     float total = v.multas + v.recargoTipo + v.recargoRegion + v.recargoAnio + v.recargoAvaluo;
 
     printf("\n========== COMPROBANTE DE MATRICULACION ==========\n");
-    printf("Placa: %s\nCédula: %s\nTotal a pagar: %.2f\n", v.placa, v.cedula, total);
+    printf("Placa: %s\nCedula: %s\nTotal a pagar: %.2f\n", v.placa, v.cedula, total);
 
     FILE *comp = fopen("D:/Proyecto/matriculacion_vehicular-main/data/comprobantes.txt", "a");
     if (comp) {
-        fprintf(comp, "Placa: %s | Cédula: %s | Total: %.2f\n", v.placa, v.cedula, total);
+        fprintf(comp, "Placa: %s | Cedula: %s | Total: %.2f\n", v.placa, v.cedula, total);
         fclose(comp);
         printf("\nComprobante generado correctamente.\n");
     } else {
@@ -287,7 +287,7 @@ void listarVehiculosMatriculadosArchivo() {
     int encontrados = 0;
 
     printf("\n-------------------------------------------------------------\n");
-    printf(" N°  Placa      Cedula          Tipo       Año   Avaluo\n");
+    printf(" N°  Placa      Cedula          Tipo       Anio   Avaluo\n");
     printf("-------------------------------------------------------------\n");
 
     while (fread(&v, sizeof(Vehiculo), 1, file)) {
@@ -325,6 +325,11 @@ Vehiculo registroVehiculo() {
         size_t len = strlen(v.placa);
         if (len > 0 && v.placa[len - 1] == '\n') {
             v.placa[len - 1] = '\0';
+        }
+
+        // eliminar espacios al inicio
+        while (v.placa[0] == ' ') {
+            memmove(v.placa, v.placa + 1, strlen(v.placa));
         }
 
         // Convertir primeros 3 caracteres a mayúsculas
@@ -391,7 +396,7 @@ Vehiculo registroVehiculo() {
     // Leer año del vehículo con validación mínima
     do {
         printf("Ingrese el anio del vehiculo (1950 - 2026):\n");
-        if (scanf("%d", &v.anio) != 1 || v.anio <= 1950 || v.anio > 2025) {
+        if (scanf("%d", &v.anio) != 1 || v.anio <= 1950 || v.anio > 2026) {
             while (getchar() != '\n');
             v.anio = 0;
             printf("Error:Ingrese un valor entre 1950 - 2026.\n");

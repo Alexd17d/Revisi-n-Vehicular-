@@ -16,7 +16,7 @@ int loginMenu(){
     // Menú de autenticación
     do {
         limpiarPantalla();
-        printf("\n\t-- SISTEMA DE USUARIOS --\n");
+        printf("\n\t-- SISTEMA --\n");
         printf("1. Registrarse\n");
         printf("2. Iniciar sesion\n");
         printf("3. Salir\n");
@@ -136,10 +136,10 @@ int main() {
                 generarComprobanteArchivo();
                 break;
             case 5:
-                printf("Cerrando sesión.........\nVuelva Pronto!\n");
+                printf("Cerrando sesion.........\nVuelva Pronto!\n");
                 break;
             default:
-                printf("Opción no válida, por favor intente de nuevo.\n");
+                printf("Opcion no valida, por favor intente de nuevo.\n");
                 mensajeSalida();
         }
         }

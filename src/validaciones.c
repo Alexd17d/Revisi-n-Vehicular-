@@ -12,6 +12,11 @@ int validarPlaca(const char *placa) {
     
     int len = strlen(placa);
 
+    // Rechazar placas vacías o nulas
+    if (strlen(placa) == 0) {
+        return 0;
+    }
+
     // Rechazar longitudes inválidas
     if (len != 8) {
         return 0;
@@ -42,6 +47,11 @@ int validarPlaca(const char *placa) {
 // Validar cédula ecuatoriana
 int validarCedula(const char *cedula) {
     int len = strlen(cedula);
+
+    // Verifica que la cédula no esté vacía
+    if (strlen(cedula) == 0) {
+    return 0;
+    }
 
     // Verifica longitud exacta de 10 caracteres
     if (len != 10) {
